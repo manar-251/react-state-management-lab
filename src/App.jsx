@@ -93,10 +93,16 @@ const App = () => {
       return;
     }
 
-    setTeam((prev) => [prev, fighter]);
+    setTeam((prev) => [...prev, fighter]);
     setMoney((prev) => prev - fighter.price);
     setZombieFighters((prev) => prev.filter((f) => f.id !== fighter.id));
   }
+
+    const handleRemoveFighter = (fighter) => {
+    setTeam(team.filter(f => f.id !== fighter.id));
+    setZombieFighters([...zombieFighters, fighter]);
+    setMoney(money + fighter.price);
+  };
 
   const totalStrength = team.reduce((sum, f) => sum + f.strength, 0);
   const totalAgility = team.reduce((sum, f) => sum + f.agility, 0);
@@ -117,8 +123,7 @@ const App = () => {
                 <img src={fighter.img} alt={fighter.name} width={64} height={64} />
                 <div>{fighter.name}</div>
                 <div>price: ${fighter.price}</div>
-                <div>strength: {fighter.strength} - agility: {fighter.agility}</div>
-
+               
 
                 <div>
                   <button
